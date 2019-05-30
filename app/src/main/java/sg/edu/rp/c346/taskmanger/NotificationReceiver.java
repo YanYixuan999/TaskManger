@@ -7,6 +7,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
@@ -24,7 +27,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default", "Default Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("default", "Default Channel", NotificationManager.IMPORTANCE_HIGH);
 
             channel.setDescription("This is for default notification");
             notificationManager.createNotificationChannel(channel);
@@ -36,18 +39,21 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 
 
-        // Build notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "default");
-        builder.setContentTitle("Task Manager Reminder!");
+        builder.setContentTitle("Task Manager Reminder");
         builder.setContentText(data);
         builder.setSmallIcon(android.R.drawable.ic_dialog_info);
         builder.setContentIntent(pIntent);
         builder.setAutoCancel(true);
-
-
+        long[] v = {500,1000};
+        builder.setVibrate(v);
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(uri);
+        builder.setLights(Color.BLUE, 2000, 1000);
+        builder.setPriority(Notification.PRIORITY_HIGH);
 
         Notification n = builder.build();
-        notificationManager.notify(123, n);
+        notificationManager.notify(reqCode, n);
     }
 
 }
