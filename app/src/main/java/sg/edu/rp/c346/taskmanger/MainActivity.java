@@ -56,16 +56,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            updateTable();
+            DBHelper db = new DBHelper(MainActivity.this);
+            tasks = db.getAllTasks();
+            aa = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, tasks);
+            lvTask.setAdapter(aa);
+            aa.notifyDataSetChanged();
+            db.close();
         }
     }
 
-    private void updateTable() {
-        DBHelper db = new DBHelper(MainActivity.this);
-        tasks = db.getAllTasks();
-        aa = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, tasks);
-        lvTask.setAdapter(aa);
-        aa.notifyDataSetChanged();
-        db.close();
-    }
+
 }

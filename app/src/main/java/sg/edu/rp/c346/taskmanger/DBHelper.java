@@ -23,6 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createNoteTableSql = "CREATE TABLE " + TABLE_TASK + "("
@@ -31,6 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createNoteTableSql);
         Log.i("info", "created tables");
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
@@ -52,6 +56,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return result;
     }
+
+
 
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -75,6 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
+
+
     public int updateTask(Task data){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -86,6 +94,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+
 
     public int deleteTask(int id){
         SQLiteDatabase db = this.getWritableDatabase();
