@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-mport android.content.Intent;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         DBHelper db = new DBHelper(MainActivity.this);
         tasks = db.getAllTasks();
-        aa = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1 ,tasks);
+        aa = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, tasks);
         lvTask.setAdapter(aa);
         aa.notifyDataSetChanged();
         db.close();
@@ -49,5 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            updateTable();
+        }
+    }
+
+    private void updateTable() {
+        DBHelper db = new DBHelper(MainActivity.this);
+        tasks = db.getAllTasks();
+        aa = new ArrayAdapter<Task>(this, android.R.layout.simple_list_item_1, tasks);
+        lvTask.setAdapter(aa);
+        aa.notifyDataSetChanged();
+        db.close();
+    }
 }
